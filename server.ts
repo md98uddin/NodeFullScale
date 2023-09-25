@@ -1,15 +1,19 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import mainRoutes from "./src/routes/mainRoutes.controller";
+import authRoutes from "./src/routes/authRoutes.controller";
 
-var app = express();
+const app = express();
 const port = 3000 || process.env.port;
 app.use(express());
+app.use(express.json());
 app.use(cors());
-require("dotenv").config();
+dotenv.config();
 
-const mainRoutes = require("./src/routes/mainRoutes.controller.ts");
-let x = 5;
+app.use(mainRoutes);
+app.use(authRoutes);
 
 app.listen(port, () => {
-  console.log("server started");
+  console.log("server started on port " + port);
 });
